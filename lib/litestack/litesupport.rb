@@ -182,7 +182,7 @@ module Litesupport
       end
       @options = defaults.merge(options)
       config = begin
-        YAML.load(ERB.new(File.read(@options[:config_path])).result
+        YAML.load(ERB.new(File.read(@options[:config_path]))).result
       rescue
         {}
       end # an empty hash won't hurt
