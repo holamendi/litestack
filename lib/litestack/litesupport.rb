@@ -7,7 +7,7 @@ require "yaml"
 require "pathname"
 require "fileutils"
 
-require_relative "./litescheduler"
+require_relative "litescheduler"
 
 module Litesupport
   class Error < StandardError; end
@@ -135,7 +135,10 @@ module Litesupport
     def close
       @running = false
       @conn.acquire do |q|
-        q.stmts.each_pair { |k, v| q.stmts[k].close }
+        q.stmts.each_pair do |k, v|
+          stmnt = q.stmts[k]
+          stmnt.close unless stmnt.closed?
+        end
         q.close
       end
     end
